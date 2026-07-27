@@ -31,6 +31,7 @@ defineModule(sim, list(
     "PredictiveEcology/LandR@development (>= 1.1.5.9041)",
     "PredictiveEcology/pemisc@development",
     "PredictiveEcology/scfmutils@development (>= 2.0.9.9003)",
+    "FOR-CAST/fireregimetools (>= 0.1.0.9001)",
     "PredictiveEcology/SpaDES.core@development (>= 2.1.5.9002)",
     "PredictiveEcology/SpaDES.tools (>= 1.0.2.9001)",
     "purrr", "reproducible", "sf", "stats", "terra"
@@ -625,14 +626,17 @@ prepare_scfmDriver <- function(sim) {
   }
   
   if (!suppliedElsewhere("firePoints", sim)) {
-    ## NOTE: do not use fireSenseUtils - it removes the cause column...among other issues
-    
-    sim$firePoints <- getFirePoints_NFDB_scfm(url = extractURL("firePoints", sim),
-                                              studyArea = sim$fireRegimePolysCalibration,
-                                              NFDB_pointPath = checkPath(file.path(dPath, "NFDB_point"), create = TRUE)
+    ## NFDB fire points via the maintained fireregimetools loader (fetch + load). It preserves the
+    ## CAUSE column -- the reason scfm avoided fireSenseUtils. min_size_ha = 0 keeps all fires; the
+    ## cause / epoch / size filtering happens downstream in scfmRegime. SpatVector -> the declared sf.
+    firePoints <- fireregimetools::fetch_nfdb_points(
+      study_area = sim$fireRegimePolysCalibration,
+      fire_years = seq.int(P(sim)$fireEpoch[1], P(sim)$fireEpoch[2]),
+      min_size_ha = 0,
+      dest = checkPath(file.path(dPath, "NFDB_point"), create = TRUE),
+      url = extractURL("firePoints", sim)
     )
-    
-    sim$firePoints <- postProcess(sim$firePoints, studyArea = sim$fireRegimePolysCalibration)
+    sim$firePoints <- sf::st_as_sf(firePoints)
   }
   
   return(invisible(sim))
