@@ -107,7 +107,11 @@ defineModule(sim, list(
                          init = list(useCloud = quote(params(sim)[["scfmDataPrep"]][[".useCloud"]]))),
                     NA, NA, "should this event be cloud cached"),
     defineParameter(".useParallelFireRegimePolys", "logical", getOption("pemisc.useParallel", FALSE), NA, NA,
-                    "should driver use parallel? Alternatively accepts a numeric argument, i.e., how many cores.")
+                    "should driver use parallel? Alternatively accepts a numeric argument, i.e., how many cores."),
+    defineParameter(".clusterTypeFireRegimePolys", "character", NA_character_, NA, NA,
+                    paste("cluster type for the parallel calibration, passed to `pemisc::makeOptimalCluster(type = )`;",
+                          "`NA` keeps its default (FORK, except on Windows). Use 'PSOCK' when the module runs inside a",
+                          "multithreaded process, such as a `crew` worker: forked workers can deadlock there."))
   ),
   inputObjects = bindrows(
     expectsInput("cloudFolderID", "character",
@@ -386,7 +390,8 @@ prepare_scfmDriver <- function(sim) {
       maxNumClusters = length(unique(sim$fireRegimePolys$PolyID)),
       outfile = file.path(outputPath(sim), "log", "scfm.log"),
       objects = c(), envir = environment(),
-      libraries = c("scfmutils")
+      libraries = c("scfmutils"),
+      type = if (is.na(P(sim)$.clusterTypeFireRegimePolys)) NULL else P(sim)$.clusterTypeFireRegimePolys
     )
     
     on.exit({
