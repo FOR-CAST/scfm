@@ -46,9 +46,11 @@ test_that("outputs are the expected names and classes", {
 
 test_that("parameters are the expected names", {
   md <- SpaDES.core::moduleMetadata(module = moduleName, path = modulePath)
+  ## .clusterTypeFireRegimePolys is this fork's own parameter (a16988f); upstream lacks it
   expect_identical(
     sort(md$parameters$paramName),
-    sort(c(".plotInitialTime", ".plotInterval", ".plots", ".saveInitialTime",
+    sort(c(".clusterTypeFireRegimePolys",
+           ".plotInitialTime", ".plotInterval", ".plots", ".saveInitialTime",
            ".saveInterval", ".studyAreaName", ".useCache", ".useCacheArgs", ".useCloud",
            ".useParallelFireRegimePolys", "buffDist", "cloudFolderID", "dataYear",
            "empiricalMaxSizeFactor", "eventsToPrepare", "fireCause",
