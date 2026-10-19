@@ -1,3 +1,7 @@
+# scfmDataPrep (development version)
+
+- requires `scfmutils` >= 2.0.9.9007, whose `calibrateFireRegimePolys()` no longer fails when every flammable pixel of a fire regime polygon has 8 flammable neighbours (PredictiveEcology/scfm#22).
+
 # scfmDataPrep 2.1.0
 
 - Released with the scfm family at 2.1.0.
