@@ -21,7 +21,7 @@ defineModule(sim, list(
     person(c("Alex", "M."), "Chubaty", email = "achubaty@for-cast.ca", role = c("ctb"))
   ),
   childModules = character(0),
-  version = list(scfmDataPrep = "0.0.0.9000"),
+  version = list(scfmDataPrep = "2.1.0"),
   timeframe = as.POSIXlt(c(NA, NA)),
   timeunit = "year",
   citation = list("citation.bib"),
@@ -539,7 +539,7 @@ prepare_scfmDriver <- function(sim) {
       sf::st_convex_hull() |>
       sf::st_as_sf()
     
-    sac <- st_transform(sac, to = sa)
+    sac <- sf::st_transform(sac, sf::st_crs(sa)) # current sf requires crs; older sf ignored `to = sa`
     
     sim$fireRegimePolysCalibration <- postProcess(frpc, to = sac)
     

@@ -10,7 +10,7 @@ defineModule(sim, list(
     person("Alex M", "Chubaty", email = "achubaty@for-cast.ca", role = c("aut", "cre"))
   ),
   childModules = character(0),
-  version = list(scfmDiagnostics = "2.0.0"),
+  version = list(scfmDiagnostics = "2.1.0"),
   timeframe = as.POSIXlt(c(NA, NA)),
   timeunit = "year",
   citation = list("citation.bib"),
@@ -18,7 +18,7 @@ defineModule(sim, list(
   loadOrder = list(after = c("scfmLandcoverInit", "scfmRegime", "scfmDriver",
                              "scfmEscape", "scfmIgnition", "scfmSpread")),
   reqdPkgs = list(
-    "ggplot2", "gridExtra", "qs2",
+    "data.table", "ggplot2", "gridExtra", "qs2", "terra",
     "PredictiveEcology/reproducible@development (>= 3.0.0)",
     "PredictiveEcology/scfmutils@development (>= 2.0.9.9004)",
     "PredictiveEcology/SpaDES.core@development (>= 3.0.3.9003)"
@@ -136,7 +136,6 @@ doEvent.scfmDiagnostics = function(sim, eventTime, eventType) {
       }
 
       if ("screen" %in% P(sim)$.plots) {
-        clearPlot()
         ## fmt: skip
         gridExtra::grid.arrange(
           gg_frp, gg_mfs, gg_fri,
@@ -226,7 +225,6 @@ doEvent.scfmDiagnostics = function(sim, eventTime, eventType) {
       }
 
       if ("screen" %in% P(sim)$.plots) {
-        clearPlot()
         ## fmt: skip
         gridExtra::grid.arrange(
           gg_frp, gg_mfs, gg_fri,

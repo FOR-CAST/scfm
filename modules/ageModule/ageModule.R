@@ -1,19 +1,20 @@
 defineModule(sim, list(
   name = "ageModule",
-  description = "Creates and maintains a raster called `ageMap`.",
+  description = paste("Deprecated: not part of the scfm parent module, and will be removed in a later release.",
+                      "Creates and maintains a raster called `ageMap`."),
   keywords = c("forest age", "modelling course", "Lab 5"),
   authors = c(
     person(c("Steve", "G"), "Cumming", email = "stevec@sbf.ulaval.ca", role = c("aut", "cre"))
   ),
   childModules = character(),
-  version = list(ageModule = "2.0.0"),
+  version = list(ageModule = "2.1.0"),
   timeframe = as.POSIXlt(c(NA, NA)),
   timeunit = "year",
   citation = list("citation.bib"),
   documentation = list("README.txt", "ageModule.Rmd"),
   reqdPkgs = list("RColorBrewer", "sf", "terra",
                   "PredictiveEcology/LandR@development",
-                  "PredictiveEcology/scfmutils (>= 2.0.1)"),
+                  "PredictiveEcology/scfmutils@development (>= 2.0.1)"),
   parameters = rbind(
     defineParameter("initialAge", "numeric", 99.0, 0, 1e4,
                     "initial age"),
@@ -92,16 +93,13 @@ Init <- function(sim) {
     sim$ageMap <- postProcess(sim$ageMap, rasterToMatch = sim$rasterToMatch)
   }
 
-  ## we will use our colour choices, not whatever may have come with the loaded map.
-  setColors(sim$ageMap, n = 10, colorRampPalette(c("LightGreen", "DarkGreen"))(10))
-
   return(invisible(sim))
 }
 
 Age <- function(sim) {
 
   newAges <- pmin(P(sim)$maxAge, as.vector(sim$ageMap) + P(sim)$returnInterval)
-  sim$ageMap[newAges]
+  sim$ageMap[] <- newAges
 
   if (!is.null(sim$rstCurrentBurn)) {
     compareGeom(sim$rasterToMatch, sim$ageMap, sim$rstCurrentBurn)

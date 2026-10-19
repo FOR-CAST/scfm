@@ -1,4 +1,6 @@
-# scfmDataPrep (development version)
+# scfmDataPrep 2.1.0
+
+- Released with the scfm family at 2.1.0.
 
 - changed `fireEpoch` from 1970-2020 in order to expand input data so that more wildfire is detected on the landscape
 - new parameter `.clusterTypeFireRegimePolys` sets the cluster type for the parallel calibration. Forked workers, pemisc's default except on Windows, deadlocked when the module ran inside a multithreaded process such as a `crew` worker; use `"PSOCK"` there.
