@@ -1,7 +1,7 @@
 ---
 title: "scfmDataPrep Manual"
 subtitle: "v.2.1.0"
-date: "Last updated: 2026-10-08"
+date: "Last updated: 2026-10-19"
 output:
   bookdown::html_document2:
     toc: true
@@ -397,6 +397,14 @@ Provide a summary of user-visible parameters (Table \@ref(tab:moduleParams-scfmD
    <td style="text-align:left;"> NA </td>
    <td style="text-align:left;"> NA </td>
    <td style="text-align:left;"> should driver use parallel? Alternatively accepts a numeric argument, i.e., how many cores. </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> .clusterTypeFireRegimePolys </td>
+   <td style="text-align:left;"> character </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> cluster type for the parallel calibration, passed to `pemisc::makeOptimalCluster(type = )`; `NA` keeps its default (FORK, except on Windows). Use 'PSOCK' when the module runs inside a multithreaded process, such as a `crew` worker: forked workers can deadlock there. </td>
   </tr>
 </tbody>
 </table>

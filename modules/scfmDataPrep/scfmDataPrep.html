@@ -2973,7 +2973,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">scfmDataPrep Manual</h1>
 <h3 class="subtitle">v.2.1.0</h3>
-<h4 class="date">Last updated: 2026-10-08</h4>
+<h4 class="date">Last updated: 2026-10-19</h4>
 
 </div>
 
@@ -3834,6 +3834,26 @@ NA
 </td>
 <td style="text-align:left;">
 should driver use parallel? Alternatively accepts a numeric argument, i.e., how many cores.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+.clusterTypeFireRegimePolys
+</td>
+<td style="text-align:left;">
+character
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+cluster type for the parallel calibration, passed to <code>pemisc::makeOptimalCluster(type = )</code>; <code>NA</code> keeps its default (FORK, except on Windows). Use ‘PSOCK’ when the module runs inside a multithreaded process, such as a <code>crew</code> worker: forked workers can deadlock there.
 </td>
 </tr>
 </tbody>
