@@ -1,7 +1,7 @@
 ---
 title: "ageModule Manual"
 subtitle: "v.2.1.0"
-date: "Last updated: 2026-10-19"
+date: "Last updated: 2026-10-20"
 output:
   bookdown::html_document2:
     toc: true
